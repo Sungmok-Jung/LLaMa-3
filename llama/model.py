@@ -30,6 +30,7 @@ class ModelArgs:
 
     max_batch_size: int = 32
     max_seq_len: int = 2048
+    use_scaled_rope: bool = True # adding by sungmok
 
 
 class RMSNorm(torch.nn.Module):
@@ -298,5 +299,7 @@ class Transformer(nn.Module):
         for layer in self.layers:
             h = layer(h, start_pos, freqs_cis, mask)
         h = self.norm(h)
+        print(h.shape)
         output = self.output(h).float()
+        print(output.shape)
         return output
